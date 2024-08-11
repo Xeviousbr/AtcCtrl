@@ -59,6 +59,8 @@ namespace AtcCtrl
             File.WriteAllText(caminhoDoArquivo, Texto);
         }
 
+        #region Botões        
+
         private void toolStripButtonRedo_Click(object sender, EventArgs e)
         {
             if (rtfTexto.CanRedo)
@@ -186,5 +188,7 @@ namespace AtcCtrl
             //Criptografia = false;
             //SalvaRTF();
         }
+
+        #endregion
     }
 }
