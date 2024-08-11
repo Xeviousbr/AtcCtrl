@@ -1,0 +1,75 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETFramework,Version=v4.8": {
+      "ATCDll/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.8",
+        "compile": {
+          "bin/placeholder/ATCDll.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ATCDll.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ATCDll/1.0.0": {
+      "type": "project",
+      "path": "../../ATCDll/ATCDll/ATCDll.csproj",
+      "msbuildProject": "../../ATCDll/ATCDll/ATCDll.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETFramework,Version=v4.8": [
+      "ATCDll >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Dayse\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Prog\\T-Bonifacio\\AtcCtrl\\AtcCtrl\\AtcCtrl.csproj",
+      "projectName": "AtcCtrl",
+      "projectPath": "C:\\Prog\\T-Bonifacio\\AtcCtrl\\AtcCtrl\\AtcCtrl.csproj",
+      "packagesPath": "C:\\Users\\Dayse\\.nuget\\packages\\",
+      "outputPath": "C:\\Prog\\T-Bonifacio\\AtcCtrl\\AtcCtrl\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Dayse\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net48"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net48": {
+          "targetAlias": "net48",
+          "projectReferences": {
+            "C:\\Prog\\T-Bonifacio\\ATCDll\\ATCDll\\ATCDll.csproj": {
+              "projectPath": "C:\\Prog\\T-Bonifacio\\ATCDll\\ATCDll\\ATCDll.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net48": {
+        "targetAlias": "net48",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
