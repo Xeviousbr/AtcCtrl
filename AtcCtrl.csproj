@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-	<Version>1.1.0</Version>
+	<Version>1.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

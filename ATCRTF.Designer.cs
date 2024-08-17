@@ -54,8 +54,8 @@ namespace AtcCtrl
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonBold,
-            this.toolStripButtonItalic,
             this.toolStripButtonUnderline,
+            this.toolStripButtonItalic,
             this.toolStripButtonIncreaseFont,
             this.toolStripButtonDecreaseFont,
             this.toolStripButtonUndo,
@@ -82,6 +82,7 @@ namespace AtcCtrl
             this.toolStripButtonBold.Name = "toolStripButtonBold";
             this.toolStripButtonBold.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonBold.Text = "Negrito";
+            this.toolStripButtonBold.Click += new System.EventHandler(this.toolStripButtonBold_Click);
             // 
             // toolStripButtonItalic
             // 
@@ -131,6 +132,7 @@ namespace AtcCtrl
             this.toolStripButtonUndo.Name = "toolStripButtonUndo";
             this.toolStripButtonUndo.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonUndo.Text = "Desfazer";
+            this.toolStripButtonUndo.Click += new System.EventHandler(this.toolStripButtonUndo_Click);
             // 
             // toolStripButtonRedo
             // 

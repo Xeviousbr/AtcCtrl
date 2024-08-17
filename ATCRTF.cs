@@ -4,6 +4,9 @@ using System.IO;
 using System.Windows.Forms;
 using TeleBonifacio.gen;
 
+// 1.1.0 Ressucitação do componente
+// 1.1.1 Conserto do Negrito e Undu
+
 namespace AtcCtrl
 {
     public partial class ATCRTF : UserControl
