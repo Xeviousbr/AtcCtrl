@@ -12,3 +12,4 @@ C:\Prog\T-Bonifacio\AtcCtrl\AtcCtrl\obj\Release\net48\AtcCtrl.AssemblyInfo.cs
 C:\Prog\T-Bonifacio\AtcCtrl\AtcCtrl\obj\Release\net48\AtcCtrl.csproj.CoreCompileInputs.cache
 C:\Prog\T-Bonifacio\AtcCtrl\AtcCtrl\obj\Release\net48\AtcCtrl.dll
 C:\Prog\T-Bonifacio\AtcCtrl\AtcCtrl\obj\Release\net48\AtcCtrl.pdb
+C:\Prog\T-Bonifacio\AtcCtrl\AtcCtrl\obj\Release\net48\AtcCtrl.csproj.CopyComplete

@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using TeleBonifacio.gen;
 
+// 1.1.3 Previsão de erro pra caso o arquivo não exista
 // 1.1.2 Clicando ao final da linha aplica estilo para a linha toda
 // 1.1.1 Conserto do Negrito e Undu
 // 1.1.0 Ressucitação do componente
@@ -46,12 +47,19 @@ namespace AtcCtrl
 
         public void Carrega()
         {
-            string Texto = File.ReadAllText(caminhoDoArquivo);
-            if (Criptografia)
+            try
             {
-                Texto = Cripto.Decrypt(Texto);
+                string Texto = File.ReadAllText(caminhoDoArquivo);
+                if (Criptografia)
+                {
+                    Texto = Cripto.Decrypt(Texto);
+                }
+                rtfTexto.Rtf = Texto;
             }
-            rtfTexto.Rtf = Texto;
+            catch (Exception)
+            {
+                // throw;
+            }
         }
 
         private void SalvaRTF()
