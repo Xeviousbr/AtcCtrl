@@ -4,8 +4,10 @@ using System.IO;
 using System.Windows.Forms;
 using TeleBonifacio.gen;
 
-// 1.1.0 Ressucitação do componente
+// 1.1.2 Clicando ao final da linha aplica estilo para a linha toda
 // 1.1.1 Conserto do Negrito e Undu
+// 1.1.0 Ressucitação do componente
+
 
 namespace AtcCtrl
 {
@@ -62,7 +64,41 @@ namespace AtcCtrl
             File.WriteAllText(caminhoDoArquivo, Texto);
         }
 
-        #region Botões        
+        #region Botões 
+
+        private void ApplyStyleToLineOrSelection(Action<Font> fontAction = null, Action colorAction = null)
+        {
+            int selectionStart = rtfTexto.SelectionStart;
+            int selectionLength = rtfTexto.SelectionLength;
+
+            if (selectionLength == 0)
+            {
+                // Não há seleção, então selecione a linha inteira
+                SelectCurrentLine();
+            }
+
+            if (fontAction != null && rtfTexto.SelectionFont != null)
+            {
+                Font currentFont = rtfTexto.SelectionFont;
+                fontAction(currentFont);
+            }
+
+            if (colorAction != null)
+            {
+                colorAction();
+            }
+
+            // Restaure a seleção original ou a posição do cursor
+            rtfTexto.Select(selectionStart, selectionLength);
+        }
+
+        private void SelectCurrentLine()
+        {
+            int lineStart = rtfTexto.GetFirstCharIndexOfCurrentLine();
+            int lineEnd = rtfTexto.Text.IndexOf('\n', lineStart);
+            if (lineEnd == -1) lineEnd = rtfTexto.Text.Length;
+            rtfTexto.Select(lineStart, lineEnd - lineStart);
+        }
 
         private void toolStripButtonRedo_Click(object sender, EventArgs e)
         {
@@ -82,98 +118,77 @@ namespace AtcCtrl
 
         private void toolStripButtonDecreaseFont_Click(object sender, EventArgs e)
         {
-            float newSize = this.rtfTexto.SelectionFont.Size - 1;
-            this.rtfTexto.SelectionFont = new Font(this.rtfTexto.SelectionFont.FontFamily, Math.Max(newSize, 1), this.rtfTexto.SelectionFont.Style); // Garante que o tamanho mínimo seja 1
+            ApplyStyleToLineOrSelection(currentFont =>
+            {
+                float newSize = Math.Max(currentFont.Size - 1, 1); // Garante que o tamanho mínimo seja 1
+                rtfTexto.SelectionFont = new Font(currentFont.FontFamily, newSize, currentFont.Style);
+            });
         }
 
         private void toolStripButtonIncreaseFont_Click(object sender, EventArgs e)
         {
-            float newSize = this.rtfTexto.SelectionFont.Size + 1;
-            this.rtfTexto.SelectionFont = new Font(this.rtfTexto.SelectionFont.FontFamily, newSize, this.rtfTexto.SelectionFont.Style);
+            ApplyStyleToLineOrSelection(currentFont =>
+            {
+                float newSize = currentFont.Size + 1;
+                rtfTexto.SelectionFont = new Font(currentFont.FontFamily, newSize, currentFont.Style);
+            });
         }
 
         private void toolStripButtonUnderline_Click(object sender, EventArgs e)
         {
-            if (rtfTexto.SelectionFont != null)
+            ApplyStyleToLineOrSelection(currentFont =>
             {
-                FontStyle currentStyle = rtfTexto.SelectionFont.Style;
-                FontStyle newStyle;
-                if (rtfTexto.SelectionFont.Underline)
-                {
-                    newStyle = currentStyle & ~FontStyle.Underline;
-                }
-                else
-                {
-                    newStyle = currentStyle | FontStyle.Underline;
-                }
-                rtfTexto.SelectionFont = new Font(rtfTexto.SelectionFont.FontFamily, rtfTexto.SelectionFont.Size, newStyle);
-            }
+                FontStyle newStyle = currentFont.Style ^ FontStyle.Underline;
+                rtfTexto.SelectionFont = new Font(currentFont.FontFamily, currentFont.Size, newStyle);
+            });
         }
 
         private void toolStripButtonItalic_Click(object sender, EventArgs e)
         {
-            if (rtfTexto.SelectionFont != null)
+            ApplyStyleToLineOrSelection(currentFont =>
             {
-                FontStyle currentStyle = rtfTexto.SelectionFont.Style;
-                FontStyle newStyle;
-                if (rtfTexto.SelectionFont.Italic)
-                {
-                    newStyle = currentStyle & ~FontStyle.Italic;
-                }
-                else
-                {
-                    newStyle = currentStyle | FontStyle.Italic;
-                }
-                rtfTexto.SelectionFont = new Font(rtfTexto.SelectionFont.FontFamily, rtfTexto.SelectionFont.Size, newStyle);
-            }
+                FontStyle newStyle = currentFont.Style ^ FontStyle.Italic;
+                rtfTexto.SelectionFont = new Font(currentFont.FontFamily, currentFont.Size, newStyle);
+            });
         }
 
         private void toolStripButtonBold_Click(object sender, EventArgs e)
         {
-            if (rtfTexto.SelectionFont != null)
+            ApplyStyleToLineOrSelection(currentFont =>
             {
-                FontStyle currentStyle = rtfTexto.SelectionFont.Style;
-                FontStyle newStyle;
-                if (rtfTexto.SelectionFont.Bold)
-                {
-                    newStyle = currentStyle & ~FontStyle.Bold;
-                }
-                else
-                {
-                    newStyle = currentStyle | FontStyle.Bold;
-                }
-                rtfTexto.SelectionFont = new Font(rtfTexto.SelectionFont.FontFamily, rtfTexto.SelectionFont.Size, newStyle);
-            }
+                FontStyle newStyle = currentFont.Style ^ FontStyle.Bold;
+                rtfTexto.SelectionFont = new Font(currentFont.FontFamily, currentFont.Size, newStyle);
+            });
         }
 
         private void tsVermelho_Click(object sender, EventArgs e)
         {
-            rtfTexto.SelectionColor = Color.Red;
+            ApplyStyleToLineOrSelection(null, () => rtfTexto.SelectionColor = Color.Red);
         }
 
         private void tsAzul_Click(object sender, EventArgs e)
         {
-            rtfTexto.SelectionColor = Color.Blue;
+            ApplyStyleToLineOrSelection(null, () => rtfTexto.SelectionColor = Color.Blue);
         }
 
         private void tsVerde_Click(object sender, EventArgs e)
         {
-            rtfTexto.SelectionColor = Color.Green;
+            ApplyStyleToLineOrSelection(null, () => rtfTexto.SelectionColor = Color.Green);
         }
 
         private void tsLaranja_Click(object sender, EventArgs e)
         {
-            rtfTexto.SelectionColor = Color.Orange;
+            ApplyStyleToLineOrSelection(null, () => rtfTexto.SelectionColor = Color.Orange);
         }
 
         private void tsPreto_Click(object sender, EventArgs e)
         {
-            rtfTexto.SelectionColor = Color.Black;
+            ApplyStyleToLineOrSelection(null, () => rtfTexto.SelectionColor = Color.Black);
         }
 
         private void tsCinza_Click(object sender, EventArgs e)
         {
-            rtfTexto.SelectionColor = Color.Gray;
+            ApplyStyleToLineOrSelection(null, () => rtfTexto.SelectionColor = Color.Gray);
         }
 
         private void toolStripButtonEncrypt_Click(object sender, EventArgs e)
