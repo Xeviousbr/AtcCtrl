@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using TeleBonifacio.gen;
 
+// 1.1.5 Acionamento de URLs
+// 1.1.4 Funcionamento do TAB
 // 1.1.3 Previsão de erro pra caso o arquivo não exista
 // 1.1.2 Clicando ao final da linha aplica estilo para a linha toda
 // 1.1.1 Conserto do Negrito e Undu
 // 1.1.0 Ressucitação do componente
-
 
 namespace AtcCtrl
 {
@@ -24,6 +27,8 @@ namespace AtcCtrl
             InitializeComponent();
         }
 
+        #region rtfTexto        
+
         private void rtfTexto_TextChanged(object sender, EventArgs e)
         {
             if (!carregando)
@@ -35,6 +40,21 @@ namespace AtcCtrl
             }
         }
 
+        private void rtfTexto_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+
+                // Insere espaços equivalentes a um TAB
+                int espacosParaTab = 4; // Você pode ajustar este valor conforme necessário
+                rtfTexto.SelectedText = new string(' ', espacosParaTab);
+            }
+        }
+
+        #endregion
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             timer1.Enabled = false;
@@ -44,6 +64,8 @@ namespace AtcCtrl
                 timer1.Interval -= 100;
             }
         }
+
+        #region Arquivo        
 
         public void Carrega()
         {
@@ -71,6 +93,8 @@ namespace AtcCtrl
             }
             File.WriteAllText(caminhoDoArquivo, Texto);
         }
+
+        #endregion
 
         #region Botões 
 
@@ -215,6 +239,66 @@ namespace AtcCtrl
             //SalvaRTF();
         }
 
+
         #endregion
+
+        #region URL        
+
+        private bool IsValidUrl(string text)
+        {
+            string pattern = @"^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$";
+            return Regex.IsMatch(text, pattern, RegexOptions.IgnoreCase);
+        }
+
+        private string GetWordAtIndex(int index)
+        {
+            string text = rtfTexto.Text;
+            int start = index;
+            int end = index;
+
+            while (start > 0 && !char.IsWhiteSpace(text[start - 1]))
+            {
+                start--;
+            }
+
+            while (end < text.Length && !char.IsWhiteSpace(text[end]))
+            {
+                end++;
+            }
+
+            return text.Substring(start, end - start);
+        }
+
+        private void rtfTexto_MouseMove(object sender, MouseEventArgs e)
+        {
+            int charIndex = rtfTexto.GetCharIndexFromPosition(e.Location);
+            if (charIndex >= 0 && charIndex < rtfTexto.Text.Length)
+            {
+                string word = GetWordAtIndex(charIndex);
+                if (IsValidUrl(word))
+                {
+                    rtfTexto.Cursor = Cursors.Hand;
+                }
+                else
+                {
+                    rtfTexto.Cursor = Cursors.IBeam;
+                }
+            }
+        }
+
+        private void rtfTexto_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo(e.LinkText) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao abrir o link: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #endregion
+
     }
 }

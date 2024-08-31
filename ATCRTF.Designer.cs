@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Windows.Forms;
 
 namespace AtcCtrl
@@ -31,8 +32,8 @@ namespace AtcCtrl
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ATCRTF));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonBold = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonItalic = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonUnderline = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonItalic = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonIncreaseFont = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDecreaseFont = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonUndo = new System.Windows.Forms.ToolStripButton();
@@ -84,16 +85,6 @@ namespace AtcCtrl
             this.toolStripButtonBold.Text = "Negrito";
             this.toolStripButtonBold.Click += new System.EventHandler(this.toolStripButtonBold_Click);
             // 
-            // toolStripButtonItalic
-            // 
-            this.toolStripButtonItalic.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonItalic.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonItalic.Image")));
-            this.toolStripButtonItalic.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonItalic.Name = "toolStripButtonItalic";
-            this.toolStripButtonItalic.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonItalic.Text = "Itálico";
-            this.toolStripButtonItalic.Click += new System.EventHandler(this.toolStripButtonItalic_Click);
-            // 
             // toolStripButtonUnderline
             // 
             this.toolStripButtonUnderline.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -103,6 +94,16 @@ namespace AtcCtrl
             this.toolStripButtonUnderline.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonUnderline.Text = "Sublinhado";
             this.toolStripButtonUnderline.Click += new System.EventHandler(this.toolStripButtonUnderline_Click);
+            // 
+            // toolStripButtonItalic
+            // 
+            this.toolStripButtonItalic.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonItalic.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonItalic.Image")));
+            this.toolStripButtonItalic.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonItalic.Name = "toolStripButtonItalic";
+            this.toolStripButtonItalic.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonItalic.Text = "Itálico";
+            this.toolStripButtonItalic.Click += new System.EventHandler(this.toolStripButtonItalic_Click);
             // 
             // toolStripButtonIncreaseFont
             // 
@@ -228,13 +229,17 @@ namespace AtcCtrl
             // 
             // rtfTexto
             // 
+            this.rtfTexto.AcceptsTab = true;
             this.rtfTexto.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtfTexto.Location = new System.Drawing.Point(0, 25);
             this.rtfTexto.Name = "rtfTexto";
             this.rtfTexto.Size = new System.Drawing.Size(800, 425);
             this.rtfTexto.TabIndex = 1;
             this.rtfTexto.Text = "";
+            this.rtfTexto.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtfTexto_LinkClicked);
             this.rtfTexto.TextChanged += new System.EventHandler(this.rtfTexto_TextChanged);
+            this.rtfTexto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rtfTexto_KeyDown);
+            this.rtfTexto.MouseMove += new System.Windows.Forms.MouseEventHandler(this.rtfTexto_MouseMove);
             // 
             // timer1
             // 
